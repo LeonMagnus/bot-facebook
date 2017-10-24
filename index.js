@@ -9,9 +9,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
 	extended: true
 }));
-const token=process.env.Facebook_TOKEN;
 //teste la connection avec la page facebook
-app.set('port',token);
+app.set('port',process.env.PORT||80);
 app.get('/', function (req, res) {
 	res.send('salut les amie');
 });
