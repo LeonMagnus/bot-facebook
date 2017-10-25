@@ -3,7 +3,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const request = require('request');
-const path = require('path');
 var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -34,7 +33,18 @@ app.get('/', function (req, res) {
 	res.send('pour le bot facebook');
 });
 //pour verifier
-app.post('/webhook/', function (req, res) {
+app.get('/webhook', function (req, res) {
+  if (req.query['hub.mode'] === 'subscribe' && 
+		req.query['hub.verify_token'] === verify_token) {
+    console.log("Validating webhook");
+    res.status(200).send(req.query['hub.challenge']);
+  } else {
+    console.error("Failed validation. Make sure the validation tokens match.");
+    res.sendStatus(403);
+  }
+});
+//pour poste
+app.post('/webhook', function (req, res) {
     let messaging_events = req.body.entry[0].messaging
     for (let i = 0; i < messaging_events.length; i++) {
 	    let event = req.body.entry[0].messaging[i]
