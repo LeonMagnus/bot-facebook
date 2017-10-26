@@ -57,6 +57,7 @@ app.post('/webhook', function (req, res) {
  
 function receivedMessage(event) {
   var senderID = event.sender.id; //lid du tipe qui a envoille le message
+	  console.log("message envoyer par "+senderID);
   var recipientID = event.recipient.id; //lid du message 
   var timeOfMessage = event.timestamp; //temps du message qui a ete envoyer
   var message = event.message.text; //message qui a ete envoille
